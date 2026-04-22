@@ -1729,10 +1729,11 @@ function renderRanking(){
     });
   });
 
-  // Evolution ranking section — compares each driver's LAST 2 available weeks globally
+  // Evolution ranking section — only for admin/viewer
   const evoSection=document.getElementById('ranking-evo-section');
   const evoCards=document.getElementById('ranking-evo-cards');
-  if(evoSection&&evoCards){renderEvoRanking(stats);}
+  if(evoSection&&evoCards&&!isDriver()){renderEvoRanking(stats);}
+  else if(evoSection) evoSection.style.display='none';
 }
 
 // ── LINEAR REGRESSION SLOPE ──
@@ -3394,15 +3395,8 @@ function renderDashboard(){
     </div>
   `;
 
-  // Goal summary bar
   const gsEl=document.getElementById('dash-goal-summary');
-  if(gsEl&&driverStats.length){
-    gsEl.innerHTML=`<div class="kpi-summary-grid">
-      <div class="kpi-sum-card acima"><div class="kpi-sum-val">${acima}</div><div class="kpi-sum-label">🟢 Acima da meta</div></div>
-      <div class="kpi-sum-card atencao"><div class="kpi-sum-val">${atencao}</div><div class="kpi-sum-label">🟡 Atenção</div></div>
-      <div class="kpi-sum-card critico"><div class="kpi-sum-val">${critico}</div><div class="kpi-sum-label">🔴 Crítico</div></div>
-    </div>`;
-  }
+  if(gsEl) gsEl.innerHTML='';
 
   renderDashTrendChart();
   renderDashStatusChart();
