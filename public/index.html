@@ -1729,11 +1729,13 @@ function renderRanking(){
     });
   });
 
-  // Evolution ranking section — only for admin/viewer
+  // Evolution ranking section
   const evoSection=document.getElementById('ranking-evo-section');
   const evoCards=document.getElementById('ranking-evo-cards');
-  if(evoSection&&evoCards&&!isDriver()){renderEvoRanking(stats);}
-  else if(evoSection) evoSection.style.display='none';
+  if(evoSection&&evoCards){
+    const evoStats=isDriver()?stats.filter(s=>s.driver.id===getMyDriverId()):stats;
+    renderEvoRanking(evoStats);
+  }
 }
 
 // ── LINEAR REGRESSION SLOPE ──
